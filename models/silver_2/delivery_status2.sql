@@ -1,0 +1,1 @@
+Select * from {{ ref('dilvery_info') }}

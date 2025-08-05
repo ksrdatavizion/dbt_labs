@@ -1,0 +1,1 @@
+select * from {{ ref('new_product_info') }}
