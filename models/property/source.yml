@@ -9,10 +9,12 @@ sources:
         identifier: CUSTOMER  #pernament table 
       - name: delivery
         identifier: DELIVERY_STATUS_FACT
+      - name: orders
   - name: raw_prod
     schema: PROD_SCH  
     database: SNOWFLAKE_DBT_DATA
     tables:
       - name :  PRODUCT
+
 
       

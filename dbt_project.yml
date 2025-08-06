@@ -55,6 +55,9 @@ models:
       +materialized: view 
       +database: dbt_db2 
       +schema: SILVER_SCH
+      incremental_append:   #model_name
+        +materialized: incremental
+        +incremental_strategy: append
 
 
 
