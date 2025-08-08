@@ -1,0 +1,50 @@
+version: 2
+
+snapshots:
+  - name: supply_chain_orders_snapshot22
+    config:
+      database: DBT_LABS
+      target_schema: SILVER_SCH
+      strategy: timestamp
+      unique_key: ORDER_ID
+      updated_at: UPDATED_AT
+      query_tag: dbt
+      snapshot_meta_column_names:
+        dbt_valid_from: start_date
+        dbt_valid_to: end_date
+        dbt_scd_id: scd_id
+        dbt_updated_at: modified_date
+        dbt_is_deleted: is_deleted
+  - name: supply_chain_orders_snapshot
+    config:
+      config:
+      database: DBT_LABS
+      target_schema: SILVER_SCH
+      strategy: timestamp
+      unique_key: ORDER_ID
+      updated_at: UPDATED_AT
+      hard_deletes : new_record
+      query_tag: dbt
+      columns:
+         - name: dbt_is_deleted
+      snapshot_meta_column_names:
+        dbt_valid_from: start_date
+        dbt_valid_to: end_date
+        dbt_scd_id: scd_id
+        dbt_updated_at: modified_date
+        dbt_is_deleted: is_deleted
+
+  - name: supply_chain_orders_snapshot_new
+    description: >
+      Timestamp-based snapshot for tracking updates to supply chain orders. 
+      Uses the `UPDATED_AT` column to identify new changes.
+    relation: source('raw_cust', 'SUPPLY_CHAIN_ORDERS')
+    config:
+      database: DBT_LABS
+      schema: SILVER_SCH
+      unique_key: ORDER_ID
+      strategy: timestamp
+      updated_at: UPDATED_AT
+      hard_deletes: ignore  # options are: 'ignore', 'invalidate'
+      dbt_valid_to_current: "to_date('9999-12-31')" # Specifies that current records should have `dbt_valid_to` set to `'9999-12-31'` instead of `NULL`.
+      query_tag: dbt
