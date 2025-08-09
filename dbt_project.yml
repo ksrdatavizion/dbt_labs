@@ -58,6 +58,27 @@ models:
       incremental_append:   #model_name
         +materialized: incremental
         +incremental_strategy: append
+seeds:
+  my_new_project:
+    +database: DBT_OUTPUT
+    +schema: DBT_RAW_SCH
+    country_info:
+      +column_types:
+        country_code: varchar(100)
+        country_name: varchar(100)
+        region: varchar(100)
+        currency: varchar(100)
+        language: varchar(100)
+    country_internet:
+      +delimiter: '|'
+      +schema: DBT_SCHEMA
+      +column_types:
+        country_code: varchar(100)
+        internet_users_millions: number
+        mobile_subscriptions_millions: number
+        sim_card_prefix: varchar(10)
+    country_population:
+
 
 
 
